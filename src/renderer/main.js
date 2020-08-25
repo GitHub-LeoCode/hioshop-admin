@@ -12,7 +12,9 @@ import api from './config/api'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
-
+import Blob from './vendor/Blob'
+import Export2Excel from './vendor/Export2Excel'
+import XLSX from "xlsx";
 // element-ui 跟 bootstrap css 有冲突
 // import 'bootstrap/js/modal.js'
 // import 'bootstrap/js/dropdown.js'
@@ -25,39 +27,42 @@ import 'quill/dist/quill.bubble.css'
 
 Vue.use(VueAxios, Axios);
 Vue.use(ElementUI);
+Vue.use(XLSX);
+// Vue.use(Blob);
+// Vue.use(Export2Excel);
 
 // add设置调试模式
 Vue.config.devtools = true;
- // Vue.config.devtools = __ENV__.NODE_ENV !== 'production';
+// Vue.config.devtools = __ENV__.NODE_ENV !== 'production';
 
 router.beforeEach((to, from, next) => {
 
-	let token = localStorage.getItem('token') || '';
+    let token = localStorage.getItem('token') || '';
 
     //配置接口信息
     // Axios.defaults.baseURL = 'http://www.地址.com:8360/admin/';
     Axios.defaults.baseURL = api.rootUrl;
     Axios.defaults.headers.common['X-Nideshop-Token'] = token;
 
-	if (!token && to.name !== 'login') {
-		next({
-			path: '/login',
-			query: { redirect: to.fullPath }
-		})
-	} else {
-		next()
-	}
+    if (!token && to.name !== 'login') {
+        next({
+            path: '/login',
+            query: {redirect: to.fullPath}
+        })
+    } else {
+        next()
+    }
 });
 
 if (!process.env.IS_WEB) {
-  Vue.use(require('vue-electron'))
+    Vue.use(require('vue-electron'))
 }
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  components: { App },
-  router,
-  store,
-  template: '<App/>'
+    components: {App},
+    router,
+    store,
+    template: '<App/>'
 }).$mount('#app')

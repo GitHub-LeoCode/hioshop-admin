@@ -620,6 +620,8 @@
     import VueBarcode from '../../../../node_modules/vue-barcode';
     import ElButton from "../../../../node_modules/element-ui/packages/button/src/button.vue";
     // Vue.component(VueBarcode.name, VueBarcode);
+    // import Blob from '../../vendor/Blob'
+    // import Export2Excel from '../../vendor/Export2Excel'
 
     export default {
         data() {
@@ -896,11 +898,18 @@
             exportXls() {
                 require.ensure([], () => {
                     const {export_json_to_excel} = require('../../vendor/Export2Excel');
-                    const tHeader = ['ID', '打印信息'];//生成Excel表格的头部标题栏
-                    const filterVal = ['id','print_info'];//生成Excel表格的内容栏（根据自己的数据内容属性填写）
-                    const list = this.getList();//需要导出Excel的数据
+                    const tHeader = ["id"];//生成Excel表格的头部标题栏
+                    const filterVal = ["id"];//生成Excel表格的内容栏（根据自己的数据内容属性填写）
+                    const list = this.tableData;//需要导出Excel的数据
+                    console.log(list);
                     const data = this.formatJson(filterVal, list);
+                    console.log(data);
                     export_json_to_excel(tHeader, data, '订单列表数据');//这里可以定义你的Excel表的默认名称
+                    this.$message({
+                        message: '导出成功',
+                        duration: 2000,
+                        type: 'success'
+                    })
                 })
             },
             formatJson(filterVal, jsonData) {

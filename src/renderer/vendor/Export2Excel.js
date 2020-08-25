@@ -1,7 +1,8 @@
 /* eslint-disable */
 require('script-loader!file-saver');
-require('script-loader!../vendor/Blob');
+require('script-loader!./Blob');
 require('script-loader!xlsx/dist/xlsx.core.min');
+import XLSX from 'xlsx'
 function generateArray(table) {
     var out = [];
     var rows = table.querySelectorAll('tr');
