@@ -29,6 +29,9 @@
                     <el-form-item>
                         <el-button type="primary" @click="onSubmitFilter">查询</el-button>
                     </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="exportXls">导出</el-button>
+                    </el-form-item>
                 </el-form>
             </div>
             <div class="form-table-box">
@@ -586,7 +589,8 @@
                                      placeholder="请输入商品价格"></el-input-number>
                 </el-form-item>
                 <el-form-item label="修改快递价格:">
-                    <el-input-number @change="freightPriceChange" :min="0" :max="99999999" v-model="orderInfo.freight_price"
+                    <el-input-number @change="freightPriceChange" :min="0" :max="99999999"
+                                     v-model="orderInfo.freight_price"
                                      auto-complete="off"
                                      placeholder="请输入修改后的快递"></el-input-number>
                 </el-form-item>
@@ -681,11 +685,11 @@
             goodsPriceChange(value) {
                 console.log(value);
                 this.orderInfo.goods_price = value;
-                this.orderInfo.actual_price = Number(this.orderInfo.goods_price)+Number(this.orderInfo.freight_price);
+                this.orderInfo.actual_price = Number(this.orderInfo.goods_price) + Number(this.orderInfo.freight_price);
             },
             freightPriceChange(value) {
                 this.orderInfo.freight_price = value;
-                this.orderInfo.actual_price = Number(this.orderInfo.goods_price)+Number(value);
+                this.orderInfo.actual_price = Number(this.orderInfo.goods_price) + Number(value);
             },
             getAllRegion() {
                 let that = this;
@@ -888,6 +892,19 @@
             onSubmitFilter() {
                 this.page = 1
                 this.getList()
+            },
+            exportXls() {
+                require.ensure([], () => {
+                    const {export_json_to_excel} = require('../../vendor/Export2Excel');
+                    const tHeader = ['ID', '打印信息'];//生成Excel表格的头部标题栏
+                    const filterVal = ['id','print_info'];//生成Excel表格的内容栏（根据自己的数据内容属性填写）
+                    const list = this.getList();//需要导出Excel的数据
+                    const data = this.formatJson(filterVal, list);
+                    export_json_to_excel(tHeader, data, '订单列表数据');//这里可以定义你的Excel表的默认名称
+                })
+            },
+            formatJson(filterVal, jsonData) {
+                return jsonData.map(v => filterVal.map(j => v[j]))
             },
             getList() {
                 this.axios.get('order', {
@@ -1238,8 +1255,13 @@
                     this.getDeliveyInfo();
                 }
             },
-        },
-        components: {ElButton, 'barcode': VueBarcode},
+        }
+        ,
+        components: {
+            ElButton, 'barcode':
+            VueBarcode
+        }
+        ,
         // created(){
         //     this.getList();
         // },
@@ -1296,7 +1318,7 @@
         align-items: center;
     }
 
-    .filter-box .box{
+    .filter-box .box {
         margin-right: 20px;
         margin-bottom: 10px;
     }
@@ -1334,20 +1356,19 @@
         justify-content: space-between;
     }
 
-    .header .left{
+    .header .left {
         display: flex;
         justify-content: flex-start;
         align-items: center;
     }
 
-    .header .right{
+    .header .right {
         display: flex;
         justify-content: flex-end;
         align-items: center;
     }
 
-
-    .off-text{
+    .off-text {
         color: #fff;
         border-radius: 4px;
         background: #594d72;
@@ -1411,7 +1432,7 @@
         padding: 20px 10px;
     }
 
-    .content-wrap .user-wrap .avatar-wrap{
+    .content-wrap .user-wrap .avatar-wrap {
         display: flex;
         justify-content: flex-start;
         align-items: center;
