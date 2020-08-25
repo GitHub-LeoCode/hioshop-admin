@@ -7,11 +7,11 @@
         </div>
         <div class="content-main">
             <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane label="待付款" name="first"></el-tab-pane>
-                <el-tab-pane label="待发货" name="second"></el-tab-pane>
-                <el-tab-pane label="待收货" name="third"></el-tab-pane>
-                <el-tab-pane label="已收货" name="fourth"></el-tab-pane>
-                <el-tab-pane label="已关闭" name="fifth"></el-tab-pane>
+                <!--<el-tab-pane label="待付款" name="first"></el-tab-pane>-->
+                <!--<el-tab-pane label="待发货" name="second"></el-tab-pane>-->
+                <!--<el-tab-pane label="待收货" name="third"></el-tab-pane>-->
+                <!--<el-tab-pane label="已收货" name="fourth"></el-tab-pane>-->
+                <!--<el-tab-pane label="已关闭" name="fifth"></el-tab-pane>-->
                 <el-tab-pane label="全部订单" name="sixth"></el-tab-pane>
             </el-tabs>
             <div class="filter-box">
@@ -638,8 +638,9 @@
                     logistic_code: '',
                 },
                 tableData: [],
-                activeName: 'second',
-                order_status: 300,
+                activeName: 'sixth',
+                // order_status: 300,
+                order_status: '101,102,103,202,203,300,301,302,303,401,801,802',
                 dialogVisible: false,
                 dialogVisible2: false,
                 dialogFormVisible: false,
@@ -832,6 +833,7 @@
             },
             handleClick(tab, event) {
                 let pindex = tab._data.index;
+                pindex = 5;
                 if (pindex == 0) {
                     this.order_status = '101,801'
                 }
