@@ -23,7 +23,15 @@
                         <el-input v-model="infoForm.phone"></el-input>
                     </el-form-item>
                     <el-form-item label="状态" prop="is_delete">
-                        <el-input v-model="infoForm.is_delete"></el-input>
+                        <el-select class="el-select-class" v-model="infoForm.is_delete"
+                                   placeholder="选择厂商">
+                            <el-option
+                                    v-for="item in manuFactorOptions"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="onSubmitInfo">确定保存</el-button>
@@ -45,6 +53,7 @@
         data() {
             return {
                 root: '',
+                manuFactorOptions: [{label: '正常', value: 0}, {label: '已删除', value: 1}],
                 infoForm: {
                     name: "",
                     address: "",
