@@ -58,6 +58,7 @@
                                 <div class="goods-list" v-for="iitem in item.goodsList">
                                     <img :src="iitem.list_pic_url" class="goods-img">
                                     <div class="goods-name">{{iitem.goods_aka}}</div>
+                                    <div class="manufactor-name"><label>厂商：</label>{{iitem.manufactor_name}}</div>
                                     <div class="goods-number"><label>数量：</label>{{iitem.number}}</div>
                                 </div>
                             </div>
@@ -77,7 +78,8 @@
                                 </div>
                                 <div class="user-address">{{item.full_region}}{{item.address}}</div>
                                 <div v-if="item.postscript != ''" class="user-post">留言：{{item.postscript}}</div>
-                                <el-input class="admin-memo" type="textarea" @blur='changeMemo(item.id,item.admin_memo)'
+                                <el-input class="admin-memo" type="textarea"
+                                          @blur='changeMemo(item.id,item.admin_memo)'
                                           v-model="item.admin_memo"
                                           placeholder="备注"></el-input>
                             </div>
@@ -799,6 +801,9 @@
                 })
             },
             changeMemo(id, text) {
+                if (text === null) {
+                    return null;
+                }
                 this.axios.post('order/saveAdminMemo', {
                     text: text,
                     id: id
@@ -1428,13 +1433,13 @@
     }
 
     .content-wrap .left {
-        width: 30%;
+        width: 50%;
         border-right: 1px solid #d1dbe5;
         padding: 20px 10px;
     }
 
     .content-wrap .user-wrap {
-        width: 16%;
+        width: 15%;
         border-right: 1px solid #d1dbe5;
         display: flex;
         flex-direction: column;
@@ -1470,13 +1475,13 @@
     }
 
     .content-wrap .main {
-        width: 36%;
+        width: 25%;
         border-right: 1px solid #d1dbe5;
         padding: 20px 10px;
     }
 
     .content-wrap .right {
-        width: 12%;
+        width: 10%;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1538,7 +1543,7 @@
         color: #5e7382;
         font-size: 14px;
         margin: 0 20px 0 10px;
-        width: 180px;
+        width: 40%;
     }
 
     .goods-spec {
@@ -1552,6 +1557,14 @@
         color: #ff3456;
         font-size: 14px;
         margin-right: 20px;
+        width: 20%;
+    }
+
+    .manufactor-name {
+        color: #5e7382;
+        font-size: 14px;
+        margin: 0 20px 0 10px;
+        width: 40%;
     }
 
     .goods-number label {
