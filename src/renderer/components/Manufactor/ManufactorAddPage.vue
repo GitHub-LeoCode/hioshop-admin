@@ -38,7 +38,6 @@
 
 <script>
     import api from '@/config/api';
-    import $ from 'jquery'
     import {quillEditor} from 'vue-quill-editor'
     import ElForm from "../../../../node_modules/element-ui/packages/form/src/form.vue";
 
@@ -93,8 +92,24 @@
                     }
                 });
             },
+            getInfo() {
+                if (this.infoForm.id <= 0) {
+                    return false
+                }
+                //加载商品详情
+                let that = this
+                this.axios.get('manufactor/info', {
+                    params: {
+                        id: that.infoForm.id
+                    }
+                }).then((response) => {
+                    that.infoForm = response.data.data.data;
+                })
+            },
             mounted() {
                 this.infoForm.id = this.$route.query.id || 0;
+                this.getInfo();
+                this.root = api.rootUrl;
             }
         },
     }

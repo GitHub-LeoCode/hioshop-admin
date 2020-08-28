@@ -23,8 +23,7 @@
             </div>
             <div class="form-table-box" v-if="fake == 0">
                 <el-table :data="tableData" style="width: 100%" border stripe>
-                    <el-table-column prop="id" label="ID" width="60">
-                    </el-table-column>
+                    <el-table-column prop="id" label="ID" width="60"></el-table-column>
                     <el-table-column prop="name" label="厂商名称">
                         <template scope="scope">
                             <el-input v-model="scope.row.name" placeholder="厂商名称"
