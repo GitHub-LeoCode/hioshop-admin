@@ -52,6 +52,7 @@
                                 </template>
                             </el-table-column>
                             <el-table-column prop="goods_name" label="商品名"></el-table-column>
+                            <el-table-column prop="manufactor_name" label="厂商名"></el-table-column>
                             <el-table-column prop="goods_specifition_name_value" label="型号"
                                              width="100"></el-table-column>
                             <el-table-column prop="retail_price" label="售价" width="100"></el-table-column>
@@ -73,9 +74,14 @@
                         </el-table>
                         <div class="detail-wrap">
                             <div class="total-price"> 优惠：¥{{infoForm.promotions_price}}</div>
-                            <div class="total-price"> 合计：¥{{infoForm.actual_price}}（含运费：¥{{infoForm.freight_price}}）</div>
-                            <div class="total-price"> 改价前：¥{{infoForm.change_price}}（含运费：¥{{infoForm.freight_price}}）</div>
-                            <div class="total-price"> {{infoForm.change_price-infoForm.actual_price>0?'优惠金额：'+(infoForm.change_price-infoForm.actual_price).toFixed(2):'涨价金额：'+(infoForm.actual_price- infoForm.change_price).toFixed(2)}}</div>
+                            <div class="total-price"> 合计：¥{{infoForm.actual_price}}（含运费：¥{{infoForm.freight_price}}）
+                            </div>
+                            <div class="total-price"> 改价前：¥{{infoForm.change_price}}（含运费：¥{{infoForm.freight_price}}）
+                            </div>
+                            <div class="total-price">
+                                {{infoForm.change_price-infoForm.actual_price>0?'优惠金额：'+(infoForm.change_price-infoForm.actual_price).toFixed(2):'涨价金额：'+(infoForm.actual_price-
+                                infoForm.change_price).toFixed(2)}}
+                            </div>
                         </div>
                         <div class="memo-wrap">
                             <div class="content-title">卖家备注：</div>
@@ -275,9 +281,9 @@
                         label: '交易成功'
                     },
                 ],
-                statusVisible:false,
+                statusVisible: false,
                 statusValue: '',
-                statusData:{},
+                statusData: {},
                 activeName: 'first',
                 dialogVisible: false,
                 dialogAddressVisible: false,
@@ -307,15 +313,18 @@
                 oldGoodsNumber: 0,
                 expressData: {},
                 is_finish: 0,
-                on_posting:0
+                on_posting: 0
             }
         },
         methods: {
-            changeStatus(){
+            changeStatus() {
                 this.statusVisible = true;
             },
-            statusConfirm(){
-                this.axios.post('order/changeStatus', {status: this.statusValue,orderSn:this.infoForm.order_sn}).then((response) => {
+            statusConfirm() {
+                this.axios.post('order/changeStatus', {
+                    status: this.statusValue,
+                    orderSn: this.infoForm.order_sn
+                }).then((response) => {
 //                    console.log(response.data);
                     this.getInfo();
                     this.statusVisible = false;
@@ -497,8 +506,8 @@
                     let data = {
                         user_id: this.infoForm.user_id,
                         name: this.infoForm.consignee,
-                        nickname:this.infoForm.user_name,
-                        avatar:this.infoForm.avatar,
+                        nickname: this.infoForm.user_name,
+                        avatar: this.infoForm.avatar,
                         mobile: this.infoForm.mobile,
                         postscript: this.infoForm.postscript,
                         address: this.infoForm.full_region + this.infoForm.address,
@@ -570,15 +579,17 @@
     .traces-wrap .traces-content {
         font-size: 15px;
     }
-    .memo-wrap{
+
+    .memo-wrap {
         display: flex;
         justify-content: flex-start;
         align-items: center;
     }
 
-    .memo-input{
+    .memo-input {
         margin-right: 10px;
     }
+
     .order-status-text {
         width: 100%;
         height: 100px;
@@ -617,7 +628,7 @@
         margin-bottom: 10px;
     }
 
-    .detail-wrap{
+    .detail-wrap {
         display: flex;
         flex-direction: column;
         padding: 20px;
@@ -630,6 +641,7 @@
         font-size: 14px;
         margin: 6px 0;
     }
+
     .item .t {
         width: 80px;
     }
