@@ -87,6 +87,7 @@
 
                                 <img :src="iitem.list_pic_url" class="goods-img">
                                 <div class="goods-name">{{iitem.goods_name}}</div>
+                                <div class="goods-name">{{iitem.manufactor_name}}</div>
                                 <div class="goods-spec">{{iitem.goods_specifition_name_value}}</div>
                                 <div class="goods-number">数量：{{iitem.number}}</div>
                                 <div class="goods-number">¥{{iitem.retail_price}}</div>
@@ -140,6 +141,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="goods_name" label="商品名称"></el-table-column>
+                    <el-table-column prop="manufactor_name" label="厂商名称"></el-table-column>
                     <el-table-column prop="goods_specifition_name_value" label="型号"></el-table-column>
                     <el-table-column prop="number" label="数量" width="70px"></el-table-column>
                     <el-table-column prop="retail_price" label="成交价"></el-table-column>
@@ -160,6 +162,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="name" label="商品名称"></el-table-column>
+                    <el-table-column prop="manufactor_name" label="厂商名称"></el-table-column>
                 </el-table>
             </div>
             <div class="page-box">
