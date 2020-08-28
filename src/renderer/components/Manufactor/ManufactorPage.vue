@@ -41,7 +41,7 @@
                     </el-table-column>
                     <el-table-column label="操作">
                         <template scope="scope">
-                            <el-button size="small" @click="handleRowEdit(scope.$index, scope.row)">编辑</el-button>
+                            <!--<el-button size="small" @click="handleRowEdit(scope.$index, scope.row)">编辑</el-button>-->
                             <el-button plain size="small" type="danger"
                                        @click="handleRowDelete(scope.$index, scope.row)">删除
                             </el-button>
