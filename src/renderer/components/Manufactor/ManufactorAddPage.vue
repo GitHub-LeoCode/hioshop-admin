@@ -44,6 +44,7 @@
     export default {
         data() {
             return {
+                root: '',
                 infoForm: {
                     name: "",
                     address: "",
