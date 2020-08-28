@@ -34,9 +34,9 @@
                     <el-table-column prop="number" label="数量" width="70px"></el-table-column>
                     <el-table-column prop="retail_price" label="成交价"></el-table-column>
                     <el-table-column prop="add_time" label="加入时间"></el-table-column>
-                    <el-table-column prop="is_delete" label="是否删除">
+                    <el-table-column prop="is_delete" label="状态">
                         <template scope="scope">
-                            <label>{{scope.row.is_delete == 1? '已删':''}}</label>
+                            <label>{{scope.row.is_delete == 1? '已删':'正常'}}</label>
                         </template>
                     </el-table-column>
 
