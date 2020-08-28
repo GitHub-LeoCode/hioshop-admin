@@ -96,7 +96,6 @@
                 if (this.infoForm.id <= 0) {
                     return false
                 }
-                //加载商品详情
                 let that = this
                 this.axios.get('manufactor/info', {
                     params: {
