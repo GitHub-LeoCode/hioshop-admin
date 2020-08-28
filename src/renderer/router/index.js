@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 Vue.use(Router)
 export default new Router({
     scrollBehavior: () => ({y: 0}),
@@ -148,6 +149,16 @@ export default new Router({
                     path: 'settings/showset',
                     name: 'showset',
                     component: require('@/components/Showset/ShowSetPage')
+                },
+                {
+                    path: 'manufactor',
+                    name: 'manufactor',
+                    component: require('@/components/Manufactor/ManufactorPage')
+                },
+                {
+                    path: 'manufactor/add',
+                    name: 'manufactor_add',
+                    component: require('@/components/Manufactor/ManufactorAddPage')
                 }
             ]
         },

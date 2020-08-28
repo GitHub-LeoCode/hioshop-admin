@@ -9,7 +9,7 @@
                 <i class="fa fa-tachometer"></i>
                 <span>后台主页</span>
             </el-menu-item>
-             <el-menu-item index="/dashboard/order">
+            <el-menu-item index="/dashboard/order">
                 <i class="fa fa-large fa-reorder"></i>
                 <span>订单列表</span>
             </el-menu-item>
@@ -35,35 +35,39 @@
                 <i class="fa fa-large fa-users"></i>
                 <span>用户列表</span>
             </el-menu-item>
+            <el-menu-item index="/dashboard/manufactor">
+                <i class="fa fa-large fa-users"></i>
+                <span>厂商列表</span>
+            </el-menu-item>
             <!--<el-submenu index="settings">-->
-                <!--<template slot="title">-->
-                    <!--<i class="fa fa-large fa-wrench"></i>-->
-                    <!--<span>店铺设置</span>-->
-                <!--</template>-->
-                <!--<el-menu-item index="/dashboard/settings/showset">-->
-                    <!--<i class="fa fa-circle"></i>-->
-                    <!--<span>显示设置</span>-->
-                <!--</el-menu-item>-->
-                <!--<el-menu-item index="/dashboard/ad">-->
-                    <!--<i class="fa fa-circle"></i>-->
-                    <!--<span>广告列表</span>-->
-                <!--</el-menu-item>-->
-                <!--<el-menu-item index="/dashboard/notice">-->
-                    <!--<i class="fa fa-circle"></i>-->
-                    <!--<span>公告管理</span>-->
-                <!--</el-menu-item>-->
-                <!--<el-menu-item index="/dashboard/freight">-->
-                    <!--<i class="fa fa-circle"></i>-->
-                    <!--<span>运费模板</span>-->
-                <!--</el-menu-item>-->
-                <!--<el-menu-item index="/dashboard/shipper">-->
-                    <!--<i class="fa fa-circle"></i>-->
-                    <!--<span>快递设置</span>-->
-                <!--</el-menu-item>-->
-                <!--<el-menu-item index="/dashboard/admin">-->
-                    <!--<i class="fa fa-circle"></i>-->
-                    <!--<span>管理员</span>-->
-                <!--</el-menu-item>-->
+            <!--<template slot="title">-->
+            <!--<i class="fa fa-large fa-wrench"></i>-->
+            <!--<span>店铺设置</span>-->
+            <!--</template>-->
+            <!--<el-menu-item index="/dashboard/settings/showset">-->
+            <!--<i class="fa fa-circle"></i>-->
+            <!--<span>显示设置</span>-->
+            <!--</el-menu-item>-->
+            <!--<el-menu-item index="/dashboard/ad">-->
+            <!--<i class="fa fa-circle"></i>-->
+            <!--<span>广告列表</span>-->
+            <!--</el-menu-item>-->
+            <!--<el-menu-item index="/dashboard/notice">-->
+            <!--<i class="fa fa-circle"></i>-->
+            <!--<span>公告管理</span>-->
+            <!--</el-menu-item>-->
+            <!--<el-menu-item index="/dashboard/freight">-->
+            <!--<i class="fa fa-circle"></i>-->
+            <!--<span>运费模板</span>-->
+            <!--</el-menu-item>-->
+            <!--<el-menu-item index="/dashboard/shipper">-->
+            <!--<i class="fa fa-circle"></i>-->
+            <!--<span>快递设置</span>-->
+            <!--</el-menu-item>-->
+            <!--<el-menu-item index="/dashboard/admin">-->
+            <!--<i class="fa fa-circle"></i>-->
+            <!--<span>管理员</span>-->
+            <!--</el-menu-item>-->
             <!--</el-submenu>-->
             <el-menu-item @click="logout">
                 <i class="fa fa-large fa-sign-out"></i>
@@ -103,7 +107,7 @@
         },
         mounted() {
             console.log(this.$route.path);
-            if(!this.loginInfo){
+            if (!this.loginInfo) {
                 this.loginInfo = JSON.parse(window.localStorage.getItem('userInfo') || null);
             }
         }
