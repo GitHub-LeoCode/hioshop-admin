@@ -13,7 +13,18 @@
         <div class="content-main">
             <div class="form-table-box">
                 <el-form ref="infoForm" :rules="infoRules" :model="infoForm" label-width="120px">
-                    <el-form-item  label="商品分类">
+                    <el-form-item label="商品厂商">
+                        <el-select class="el-select-class" v-model="manufactorId"
+                                   placeholder="选择厂商">
+                            <el-option
+                                    v-for="item in manuFactorOptions"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="商品分类">
                         <el-select class="el-select-class" v-model="cateId"
                                    placeholder="选择型号分类">
                             <el-option
@@ -105,7 +116,7 @@
                                 :on-success="handleUploadDetailSuccess"
                                 :on-preview="handlePreview"
                                 :data="picData"
-                                >
+                        >
                         </el-upload>
                     </el-form-item>
                     <el-form-item label="型号和价格">
@@ -124,12 +135,14 @@
                             <el-table :data="specData" stripe style="width: 100%">
                                 <el-table-column prop="goods_sn" label="商品SKU" width="140">
                                     <template scope="scope">
-                                        <el-input @blur="checkSkuOnly(scope.$index, scope.row)" size="mini" v-model="scope.row.goods_sn" placeholder="商品SKU"></el-input>
+                                        <el-input @blur="checkSkuOnly(scope.$index, scope.row)" size="mini"
+                                                  v-model="scope.row.goods_sn" placeholder="商品SKU"></el-input>
                                     </template>
                                 </el-table-column>
                                 <el-table-column prop="goods_aka" label="快递单上的简称" width="160">
                                     <template scope="scope">
-                                        <el-input size="mini" v-model="scope.row.goods_name" placeholder="简称"></el-input>
+                                        <el-input size="mini" v-model="scope.row.goods_name"
+                                                  placeholder="简称"></el-input>
                                     </template>
                                 </el-table-column>
                                 <el-table-column prop="value" label="型号/规格" width="130">
@@ -144,17 +157,20 @@
                                 </el-table-column>
                                 <el-table-column prop="retail_price" label="零售(元)" width="100">
                                     <template scope="scope">
-                                        <el-input size="mini" v-model="scope.row.retail_price" placeholder="零售"></el-input>
+                                        <el-input size="mini" v-model="scope.row.retail_price"
+                                                  placeholder="零售"></el-input>
                                     </template>
                                 </el-table-column>
                                 <el-table-column prop="goods_weight" label="重量(KG)" width="100">
                                     <template scope="scope">
-                                        <el-input size="mini" v-model="scope.row.goods_weight" placeholder="重量"></el-input>
+                                        <el-input size="mini" v-model="scope.row.goods_weight"
+                                                  placeholder="重量"></el-input>
                                     </template>
                                 </el-table-column>
                                 <el-table-column prop="goods_number" label="库存" width="100">
                                     <template scope="scope">
-                                        <el-input size="mini" v-model="scope.row.goods_number" placeholder="库存"></el-input>
+                                        <el-input size="mini" v-model="scope.row.goods_number"
+                                                  placeholder="库存"></el-input>
                                     </template>
                                 </el-table-column>
                                 <el-table-column label="操作" width="70">
@@ -235,19 +251,21 @@
         data() {
             return {
                 root: '',
-                qiniuZone:'',
+                qiniuZone: '',
                 picData: {
                     token: ''
                 },
                 url: '',
                 kdOptions: [],
                 kdValue: '',
-                cateId:'',
+                cateId: '',
+                manufactorId: '',
                 detail_list: [],
                 dialogImageUrl: '',
                 dialogVisible: false,
                 options: [],
                 cateOptions: [],
+                manuFactorOptions: [],
                 uploaderHeader: {
                     'X-Nideshop-Token': localStorage.getItem('token') || '',
                 },
@@ -297,15 +315,15 @@
                     ],
                 },
                 specData: [{
-                    goods_sn:'',
-                    value:'',
-                    cost:'',
-                    retail_price:'',
-                    goods_weight:'',
-                    goods_number:''
+                    goods_sn: '',
+                    value: '',
+                    cost: '',
+                    retail_price: '',
+                    goods_weight: '',
+                    goods_number: ''
                 }],
                 specOptionsList: [],
-                specValue:1,
+                specValue: 1,
                 selectedSpec: '规格',
                 is_has_spec: false,
                 gallery: {
@@ -320,10 +338,10 @@
             beforeRemove(file, fileList) {
                 return this.$confirm(`确定移除 ${ file.name }？`);
             },
-            checkSkuOnly(index,row){
+            checkSkuOnly(index, row) {
                 console.log(index);
                 console.log(row);
-                if(row.goods_sn == ''){
+                if (row.goods_sn == '') {
                     this.$message({
                         type: 'error',
                         message: 'SKU不能为空'
@@ -337,7 +355,7 @@
                             message: '该SKU已存在！'
                         })
                     }
-                    else{
+                    else {
                         this.$message({
                             type: 'success',
                             message: '该SKU可以用！'
@@ -361,12 +379,12 @@
             },
             addSpecData() {
                 let ele = {
-                    goods_sn:'',
-                    value:'',
-                    cost:'',
-                    retail_price:'',
-                    goods_weight:'',
-                    goods_number:''
+                    goods_sn: '',
+                    value: '',
+                    cost: '',
+                    retail_price: '',
+                    goods_weight: '',
+                    goods_number: ''
                 }
                 this.specData.push(ele)
             },
@@ -570,15 +588,15 @@
                                 return false;
                             }
                         }
-                        if(this.specData.length == 0){
+                        if (this.specData.length == 0) {
                             this.$message({
                                 type: 'error',
                                 message: '请添加一个规格型号'
                             })
                             return false;
                         }
-                        for(const ele of this.specData){
-                            if(ele.cost == '' || ele.goods_sn == '' || ele.goods_weight == '' || ele.retail_price == '' || ele.value == ''){
+                        for (const ele of this.specData) {
+                            if (ele.cost == '' || ele.goods_sn == '' || ele.goods_weight == '' || ele.retail_price == '' || ele.value == '') {
                                 this.$message({
                                     type: 'error',
                                     message: '型号和价格的值不能为空'
@@ -590,9 +608,10 @@
                         this.axios.post('goods/store',
                             {
                                 info: this.infoForm,
-                                specData:this.specData,
-                                specValue:this.specValue,
-                                cateId:this.cateId,
+                                specData: this.specData,
+                                specValue: this.specValue,
+                                cateId: this.cateId,
+                                manufactorId: this.manufactorId
                             }).then((response) => {
                             if (response.data.errno === 0) {
                                 this.$message({
@@ -615,7 +634,7 @@
             handleUploadListSuccess(res) {
                 let url = this.url;
                 this.infoForm.list_pic_url = url + res.key;
-                this.axios.post('goods/uploadHttpsImage', {url:this.infoForm.list_pic_url}).then((response) => {
+                this.axios.post('goods/uploadHttpsImage', {url: this.infoForm.list_pic_url}).then((response) => {
                     let lastUrl = response.data.data;
                     console.log(lastUrl);
                     this.infoForm.https_pic_url = lastUrl;
@@ -702,6 +721,7 @@
                     that.infoForm = goodsInfo;
                     that.kdValue = goodsInfo.freight_template_id;
                     that.cateId = resInfo.category_id;
+                    that.manufactorId = resInfo.manufactor_id;
                     that.getImgUrl();
                 })
             },
@@ -730,6 +750,15 @@
                     let options = response.data.data;
                     that.kdOptions = options.kd;
                     that.cateOptions = options.cate;
+                })
+            },
+            getManufactorData() {
+                let that = this
+                this.axios.get('goods/getManufactorData', {
+                    params: {}
+                }).then((response) => {
+                    let options = response.data.data;
+                    that.manuFactorOptions = options.manuFactor;
                 })
             },
             // summernote 上传图片，返回链接
@@ -784,6 +813,7 @@
             this.getInfo();
             this.getAllCategory();
             this.getExpressData();
+            this.getManufactorData();
             this.getQiniuToken();
             this.getAllSpecification();
             if (this.infoForm.id > 0) {
@@ -802,9 +832,10 @@
     /*.avatar-uploader .el-upload {*/
     /*display: none;*/
     /*}*/
-    .video-wrap{
+    .video-wrap {
         width: 300px;
     }
+
     .dialog-header {
         display: flex;
         justify-content: flex-start;
@@ -893,9 +924,10 @@
         margin-right: 20px;
     }
 
-    .upload_ad{
+    .upload_ad {
         display: none;
     }
+
     .upload_ad .el-upload--picture-card {
         display: none;
     }
@@ -912,9 +944,9 @@
     }
 
     /*.dele-list-pic {*/
-        /*position: absolute;*/
-        /*left: 380px;*/
-        /*top: 0px;*/
+    /*position: absolute;*/
+    /*left: 380px;*/
+    /*top: 0px;*/
     /*}*/
 
     .image-uploader-diy .el-upload {

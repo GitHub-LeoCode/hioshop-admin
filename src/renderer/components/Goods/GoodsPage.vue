@@ -14,11 +14,11 @@
             <div class="block">
 				<span class="wrapper">
 					<el-button :plain="true" type="primary" :class="activeClass == 1 ? 'active' : '' "
-							   @click="sortOrder(1)" size="small">按销量排序</el-button>
+                               @click="sortOrder(1)" size="small">按销量排序</el-button>
 					<el-button :plain="true" type="primary" :class="activeClass == 2 ? 'active' : '' "
-							   @click="sortOrder(2)" size="small">按售价排序</el-button>
+                               @click="sortOrder(2)" size="small">按售价排序</el-button>
 					<el-button :plain="true" type="primary" :class="activeClass == 3 ? 'active' : '' "
-							   @click="sortOrder(3)" size="small">按库存排序</el-button>
+                               @click="sortOrder(3)" size="small">按库存排序</el-button>
 				</span>
             </div>
             <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -116,9 +116,13 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="name" label="商品名称"></el-table-column>
+                    <el-table-column prop="manufactor_name" label="厂商名称"></el-table-column>
                     <el-table-column prop="sort_order" label="排序" width="140" sortable>
                         <template scope="scope">
-                            <el-input-number class="sort-width" size="mini" :min="1" :max="100" controls-position="right" v-model="scope.row.sort_order" placeholder="排序" @blur="submitSort(scope.$index, scope.row)" @change="submitSort(scope.$index, scope.row)"></el-input-number>
+                            <el-input-number class="sort-width" size="mini" :min="1" :max="100"
+                                             controls-position="right" v-model="scope.row.sort_order" placeholder="排序"
+                                             @blur="submitSort(scope.$index, scope.row)"
+                                             @change="submitSort(scope.$index, scope.row)"></el-input-number>
                         </template>
                     </el-table-column>
                     <el-table-column prop="sell_volume" label="销量" width="80" sortable></el-table-column>
@@ -147,7 +151,8 @@
                     <el-table-column label="操作">
                         <template scope="scope">
                             <el-button size="small" @click="handleRowEdit(scope.$index, scope.row)">编辑</el-button>
-                            <el-button size="small" plain type="danger" @click="handleRowDelete(scope.$index, scope.row)">删除
+                            <el-button size="small" plain type="danger"
+                                       @click="handleRowDelete(scope.$index, scope.row)">删除
                             </el-button>
                         </template>
                     </el-table-column>
@@ -168,7 +173,7 @@
         data() {
             return {
                 page: 1,
-				size:10,
+                size: 10,
                 total: 0,
                 filterForm: {
                     name: ''
@@ -178,20 +183,20 @@
                 pIndex: 0,
                 num: 0,
                 activeClass: 0,
-                expand:true,
-                tableDa:[{
+                expand: true,
+                tableDa: [{
                     date: '2016-05-02',
                     name: '王小虎',
                     address: '上海市普陀区金沙江路 1518 弄'
-                  }, {
+                }, {
                     date: '2016-05-04',
                     name: '王小虎',
                     address: '上海市普陀区金沙江路 1517 弄'
-                  }, {
+                }, {
                     date: '2016-05-01',
                     name: '王小虎',
                     address: '上海市普陀区金沙江路 1519 弄'
-                  }, {
+                }, {
                     date: '2016-05-03',
                     name: '王小虎',
                     address: '上海市普陀区金沙江路 1516 弄'
@@ -199,7 +204,7 @@
             }
         },
         methods: {
-            stockSyc(){
+            stockSyc() {
                 this.$confirm('确定要同步库存?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -218,7 +223,7 @@
 
                 });
             },
-            updateGoodsNumber(){
+            updateGoodsNumber() {
                 this.axios.post('goods/updateGoodsNumber').then((response) => {
                     if (response.data.errno === 0) {
                         this.$message({
@@ -228,10 +233,10 @@
                     }
                 })
             },
-            specSave(index,row){
+            specSave(index, row) {
                 console.log(index);
                 console.log(row);
-                if(row.goods_name == '' || row.value == '' || row.cost == '' || row.retail_price == '' || row.goods_weight == ''){
+                if (row.goods_name == '' || row.value == '' || row.cost == '' || row.retail_price == '' || row.goods_weight == '') {
                     this.$message({
                         type: 'error',
                         message: '值不能为空!'
@@ -248,10 +253,10 @@
                 })
 
             },
-            checkSkuOnly(index,row){
+            checkSkuOnly(index, row) {
                 console.log(index);
                 console.log(row);
-                if(row.goods_sn == ''){
+                if (row.goods_sn == '') {
                     this.$message({
                         type: 'error',
                         message: 'SKU不能为空'
@@ -265,7 +270,7 @@
                             message: '该SKU已存在！'
                         })
                     }
-                    else{
+                    else {
                         this.$message({
                             type: 'success',
                             message: '该SKU可以用！'
@@ -273,14 +278,14 @@
                     }
                 })
             },
-            expandToggle(){
+            expandToggle() {
                 this.expand = !this.expand;
             },
-            test(){
+            test() {
                 console.log(this.tableData);
             },
-            submitName(index, row){
-                this.axios.post('goods/updateShortName', { id: row.id,short_name:row.short_name }).then((response) => {
+            submitName(index, row) {
+                this.axios.post('goods/updateShortName', {id: row.id, short_name: row.short_name}).then((response) => {
                     if (response.data.errno === 0) {
                         this.$message({
                             type: 'success',
@@ -289,12 +294,13 @@
                     }
                 })
             },
-            submitSort(index, row){
-                this.axios.post('goods/updateSort', { id: row.id,sort:row.sort_order }).then((response) => {})
+            submitSort(index, row) {
+                this.axios.post('goods/updateSort', {id: row.id, sort: row.sort_order}).then((response) => {
+                })
             },
             handleClick(tab, event) {
                 let pindex = tab._data.index;
-				this.page = 1;
+                this.page = 1;
                 this.activeClass = 0;
                 if (pindex == 0) {
                     this.getList();
@@ -343,29 +349,29 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                let that = this;
-                that.axios.post('goods/destory', {id: row.id}).then((response) => {
-                    if (response.data.errno === 0) {
-                        that.$message({
-                            type: 'success',
-                            message: '删除成功!'
-                        });
-                        let pIndex = localStorage.getItem('pIndex');
-                        console.log(pIndex);
-                        if (pIndex == 0) {
-                            that.getList();
+                    let that = this;
+                    that.axios.post('goods/destory', {id: row.id}).then((response) => {
+                        if (response.data.errno === 0) {
+                            that.$message({
+                                type: 'success',
+                                message: '删除成功!'
+                            });
+                            let pIndex = localStorage.getItem('pIndex');
+                            console.log(pIndex);
+                            if (pIndex == 0) {
+                                that.getList();
+                            }
+                            else if (pIndex == 1) {
+                                that.getOnSaleList();
+                            }
+                            else if (pIndex == 2) {
+                                that.getOutList();
+                            }
+                            else if (pIndex == 3) {
+                                that.getDropList();
+                            }
                         }
-                        else if (pIndex == 1) {
-                            that.getOnSaleList();
-                        }
-                        else if (pIndex == 2) {
-                            that.getOutList();
-                        }
-                        else if (pIndex == 3) {
-                            that.getDropList();
-                        }
-                    }
-                })
+                    })
                 }).catch(() => {
 //                    this.$message({
 //                        type: 'info',
@@ -377,7 +383,7 @@
                 this.page = 1;
                 this.getList();
             },
-            clear(){
+            clear() {
                 this.axios.get('goods', {
                     params: {
                         page: this.page,
@@ -393,7 +399,7 @@
                 this.axios.get('goods', {
                     params: {
                         page: this.page,
-						size: this.size,
+                        size: this.size,
                         name: this.filterForm.name
                     }
                 }).then((response) => {
@@ -406,7 +412,7 @@
                 this.axios.get('goods/onsale', {
                     params: {
                         page: this.page,
-						size: this.size
+                        size: this.size
                     }
                 }).then((response) => {
                     this.tableData = response.data.data.data
@@ -418,7 +424,7 @@
                 this.axios.get('goods/out', {
                     params: {
                         page: this.page,
-						size: this.size
+                        size: this.size
                     }
                 }).then((response) => {
                     this.tableData = response.data.data.data;
@@ -430,7 +436,7 @@
                 this.axios.get('goods/drop', {
                     params: {
                         page: this.page,
-						size: this.size
+                        size: this.size
                     }
                 }).then((response) => {
                     this.tableData = response.data.data.data;
@@ -445,7 +451,7 @@
                 this.axios.get('goods/sort', {
                     params: {
                         page: this.page,
-						size: this.size,
+                        size: this.size,
                         index: num
                     }
                 }).then((response) => {
@@ -494,12 +500,14 @@
 </script>
 
 <style scoped>
-    .sort-width{
+    .sort-width {
         width: 90px;
     }
-    .right{
+
+    .right {
         float: right;
     }
+
     .form-inline {
         margin-top: 2px;
         height: 40px;
@@ -508,10 +516,10 @@
 
     .block {
         margin-bottom: 10px;
-        height:42px;
+        height: 42px;
         display: flex;
         align-items: center;
-        justify-content:space-between;
+        justify-content: space-between;
     }
 
     .active {
@@ -519,7 +527,7 @@
         color: #ff4949;
     }
 
-    .marginRight{
+    .marginRight {
         margin-right: 20px;
     }
 </style>
